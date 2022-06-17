@@ -23,9 +23,11 @@ streamlit.dataframe(fruit_to_show)
 
 streamlit.header('Fruityvice fruit advice!')
 fruit_choice = streamlit.text_input('What fruit to add?')
+streamlit.text('1')
 fruityadvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
-
+streamlit.text('2')
 fruityvice_normalized = pandas.json_normalize(fruityadvice_response.json())
+streamlit.text('3')
 
 
 #my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
