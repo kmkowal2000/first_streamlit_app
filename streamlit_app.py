@@ -22,13 +22,18 @@ fruit_to_show = my_fruit_list.loc[fruits_selected]
 streamlit.dataframe(fruit_to_show)
 
 streamlit.header('Fruityvice fruit advice!')
-fruit_choice = streamlit.text_input('What fruit to add?')
-streamlit.text('1')
-fruityadvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
-streamlit.text('2')
-fruityvice_normalized = pandas.json_normalize(fruityadvice_response.json())
-streamlit.text('3')
-
+try:
+    fruit_choice = streamlit.text_input('What fruit to add?')
+    if not fruit_choice:
+        streamlit.error('Provide informatin')
+    else:
+        fruityadvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
+        #streamlit.text('2')
+        fruityvice_normalized = pandas.json_normalize(fruityadvice_response.json())
+        #streamlit.text('3')
+        streamlit.dataframe(fruityvice_normalized)
+except URLError as e:
+    streamlit.error()
 
 #my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 #my_cur = my_cnx.cursor()
@@ -39,4 +44,4 @@ streamlit.text('3')
 #streamlit.text(fruits_selected)
 #add_my_fruit = streamlit.multiselect("Pick some fruits:", list(my_fruit_list.index),[] )
 
-streamlit.stop()
+#streamlit.stop()
